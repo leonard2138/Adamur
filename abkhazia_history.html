@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>История Абхазии</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .login-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .login-title {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .password-input:focus {
+            border-color: #4a9eff;
+            box-shadow: 0 0 20px rgba(74, 158, 255, 0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4a9eff 0%, #3d8bfd 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(74, 158, 255, 0.4);
+        }
+
+        .error-msg {
+            color: #ff6b6b;
+            margin-top: 15px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-msg.show {
+            opacity: 1;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            display: none;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border-radius: 20px;
+            padding: 30px 25px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+
+        .section:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .section:nth-child(odd) {
+            animation-delay: 0.4s;
+        }
+
+        .section h2 {
+            color: #4a9eff;
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, #4a9eff, transparent);
+            border-radius: 1px;
+        }
+
+        .section h3 {
+            color: #fff;
+            font-size: 18px;
+            margin: 25px 0 15px 0;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #c0c0c0;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+
+        .section li {
+            margin-bottom: 12px;
+            color: #b0b0b0;
+            font-size: 14px;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .section li::before {
+            content: '▸';
+            color: #4a9eff;
+            position: absolute;
+            left: -15px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(74, 158, 255, 0.1) 0%, rgba(74, 158, 255, 0.05) 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #4a9eff;
+            font-weight: 500;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Защита от скриншотов и копирования */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 25px 20px;
+                margin-bottom: 25px;
+            }
+            
+            .section h2 {
+                font-size: 20px;
+            }
+            
+            .section h3 {
+                font-size: 16px;
+            }
+            
+            .section p, .section li {
+                font-size: 14px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+
+        /* Дополнительная защита */
+        .protected-content {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            pointer-events: auto;
+        }
+
+        /* Блокировка правой кнопки мыши */
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h2 class="login-title">Доступ к материалам</h2>
+            <input type="password" class="password-input" id="passwordInput" placeholder="Введите пароль">
+            <button class="login-btn" onclick="checkPassword()">Войти</button>
+            <div class="error-msg" id="errorMsg">Неверный пароль</div>
+        </div>
+    </div>
+
+    <div class="container protected-content" id="mainContent">
+        <div class="header">
+            <h1>История Абхазии</h1>
+            <p>XX век: революция, война и независимость</p>
+        </div>
+
+        <div class="section fade-in">
+            <h2>Абхазия в годы Первой русской революции (1905-1907 гг.)</h2>
+            <p>Идеи марксизма и революционная пропаганда начали проникать в Абхазию в <span class="highlight">90-х годах XIX века</span>. В 1902 году революционное движение в Абхазии усилилось, и грузинские социал-демократы приступили к созданию партийных организаций.</p>
+            
+            <p>С 1903 года в Абхазию начали доставлять революционную газету <span class="highlight">«Искра»</span>. В 1905 году была сформирована социал-демократическая <span class="highlight">«Гумистинская группа»</span>.</p>
+
+            <h3>Революционные события 1905-1907 годов</h3>
+            <p>В период с 1905 по 1907 годы Абхазию охватила волна забастовок и массовых демонстраций. С января 1905 года проходили многочисленные революционные события, включая <span class="highlight">11 забастовок и митинг в Сухуми</span>.</p>
+
+            <p>Важным событием стало установление вооруженного народно-демократического правительства в Самзакане и Гудауте, которое просуществовало с <span class="highlight">октября 1905 по январь 1906 года</span>.</p>
+
+            <h3>Подавление движения и вопрос о «виновности»</h3>
+            <p>Царские власти жестоко подавили революционное движение. Многие участники подверглись суровым наказаниям: <span class="highlight">46 революционеров были отправлены в Сибирь или заключены в тюрьмы</span>. Абхазы, участвовавшие в движении, воспринимали эти события как предательство со стороны грузинских агитаторов.</p>
+
+            <p>Особое значение в этот период имел вопрос о «виновности» абхазов:</p>
+            <ul>
+                <li><span class="highlight">31 мая 1880 года</span> император Николай II издал указ, который снял с абхазов их «виновность»</li>
+                <li><span class="highlight">27 апреля 1907 года</span> этот указ был отменен, восстанавливая «виновность» абхазского народа</li>
+                <li>Позднее в том же году, после торжественного молебна в Лыхненской церкви, «виновность» была вновь снята при поддержке министра внутренних дел Петра Столыпина</li>
+            </ul>
+        </div>
+
+        <div class="section fade-in">
+            <h2>Абхазия в годы Великой Отечественной войны (1941-1945 гг.)</h2>
+            <p>В годы Великой Отечественной войны из Абхазии на фронт ушли <span class="highlight">55 300 человек</span>, из которых более <span class="highlight">17 000 погибли</span>. Восемь человек из Абхазии были удостоены высокого звания Героя Советского Союза.</p>
+
+            <p>Женщины также принимали активное участие в войне, выполняя роль летчиков, санитарок и партизан. Абхазия являлась прифронтовой зоной, и Сухуми подвергался бомбардировкам. Население Абхазии оказывало помощь, принимая эвакуированных детей и взрослых.</p>
+
+            <h3>Политические решения военного времени</h3>
+            <p>В военные годы были приняты важные политические решения, оказавшие влияние на демографию и образование в Абхазии:</p>
+            <ul>
+                <li><span class="highlight">1942 год</span> - правительство Грузии официально утвердило переселение мингрельского населения в Абхазию, а также выселение абхазского населения из Абхазии</li>
+                <li><span class="highlight">1944 год</span> - принято секретное постановление ЦК ВКП(б) о преподавании грузинского языка в абхазских школах: с 5-го класса все предметы должны были преподаваться на русском языке, а изучение абхазского языка сокращалось</li>
+                <li><span class="highlight">1945 год</span> - принято постановление о переселении крестьянских хозяйств в Абхазскую АССР, что привело к массовому переселению грузинского населения в Абхазию</li>
+            </ul>
+        </div>
+
+        <div class="section fade-in">
+            <h2>Абхазия в 60-90-х годах XX века: Национальное движение и конфликт</h2>
+            <p>В период послесталинского СССР национально-освободительное движение абхазов неоднократно заявляло о себе, особенно в <span class="highlight">1947, 1957, 1967, 1977-78 и 1989 годах</span>.</p>
+
+            <h3>События 1977-1978 годов</h3>
+            <p>В 1977 году <span class="highlight">130 представителей абхазской интеллигенции</span> подписали письмо-протест, выражавшее озабоченность «грузинизацией» Абхазии. Это письмо было опубликовано в марте 1978 года в газете «Коммунисти».</p>
+
+            <p>В ответ на это, в 1977 году ЦК КПСС принял постановление, а затем и Совет Министров СССР принял важнейшее постановление о дальнейшем развитии экономики и культуры Абхазской АССР. Однако <span class="highlight">22 мая 1978 года</span> в Сухуми состоялся крупный митинг, на котором <span class="highlight">20 тысяч абхазов</span> требовали выхода Абхазии из состава Грузии.</p>
+
+            <h3>Период Перестройки (1985-1991)</h3>
+            <p>В период Перестройки, начиная с 1985 года, национально-освободительное движение абхазов активизировалось:</p>
+            <ul>
+                <li><span class="highlight">1988 год</span> - представители Абхазии вновь заявили о праве на самоопределение, направив 19 писем, но ответа не последовало</li>
+                <li><span class="highlight">1989 год</span> - создана инициативная группа «Айдгылара» для защиты интересов абхазского народа</li>
+                <li><span class="highlight">18 марта 1989 года</span> - направлено массовое обращение Верховному Совету СССР с требованием восстановления независимости Абхазии в составе Союза</li>
+                <li><span class="highlight">5 апреля 1989 года</span> - демонстрация абхазов в Сухуми с требованием восстановления Абхазской государственности была разогнана грузинскими военными силами, что привело к 15 жертвам</li>
+                <li><span class="highlight">25 августа 1990 года</span> - Верховный Совет Абхазской АССР принял Декларацию о государственном суверенитете</li>
+            </ul>
+
+            <h3>Грузино-абхазский конфликт 1992-1993 годов</h3>
+            <p><span class="highlight">14 августа 1992 года</span> грузинские войска вошли на территорию Абхазии в рамках операции под названием <span class="highlight">«Меч»</span>. В ответ на это, председатель Верховного Совета Абхазии В. Ардзинба объявил мобилизацию мужчин в возрасте от 18 до 40 лет.</p>
+
+            <h3>Ключевые военные операции:</h3>
+            <ul>
+                <li><span class="highlight">Освобождение Гагры (2-6 октября 1992 года)</span> - город был освобожден к 17:35</li>
+                <li><span class="highlight">Очамчирская операция (25-26 октября 1992 года)</span> - после освобождения Гагры</li>
+                <li><span class="highlight">Штурмы Сухуми (январь-март 1993 года)</span> - попытки не увенчались успехом из-за погодных условий и отсутствия подкреплений</li>
+                <li><span class="highlight">Июльское наступление (2 июля 1993 года)</span> - абхазские войска пересекли реку Гумиста</li>
+                <li><span class="highlight">Освобождение Сухуми (сентябрь 1993 года)</span> - 16 сентября началось генеральное наступление, 27 сентября Сухуми был освобожден, к 30 сентября абхазские войска вышли на реку Ингур</li>
+            </ul>
+
+            <p>В ходе войны абхазским войскам активно помогали добровольцы из Северного Кавказа, России (включая казаков и русскую диаспору), а также из Конфедерации горских народов Кавказа.</p>
+        </div>
+    </div>
+
+    <script>
+        // Защита от копирования и скриншотов
+        const correctPassword = 'kx93lcp@lcasl';
+        
+        // Блокировка контекстного меню
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Блокировка горячих клавиш
+        document.addEventListener('keydown', function(e) {
+            // Блокировка F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S, Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+            if (e.keyCode === 123 || 
+                (e.ctrlKey && e.shiftKey && e.keyCode === 73) ||
+                (e.ctrlKey && e.keyCode === 85) ||
+                (e.ctrlKey && e.keyCode === 83) ||
+                (e.ctrlKey && e.keyCode === 65) ||
+                (e.ctrlKey && e.keyCode === 67) ||
+                (e.ctrlKey && e.keyCode === 86) ||
+                (e.ctrlKey && e.keyCode === 88) ||
+                (e.metaKey && e.keyCode === 65) ||
+                (e.metaKey && e.keyCode === 67) ||
+                (e.metaKey && e.keyCode === 86) ||
+                (e.metaKey && e.keyCode === 88)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Блокировка выделения текста
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Блокировка перетаскивания
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Функция проверки пароля
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const errorMsg = document.getElementById('errorMsg');
+            const loginContainer = document.getElementById('loginContainer');
+            const mainContent = document.getElementById('mainContent');
+            
+            if (input.value === correctPassword) {
+                loginContainer.style.opacity = '0';
+                loginContainer.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    loginContainer.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    
+                    // Анимация появления контента
+                    setTimeout(() => {
+                        const sections = document.querySelectorAll('.section');
+                        sections.forEach((section, index) => {
+                            setTimeout(() => {
+                                section.style.animation = `slideInUp 0.8s ease-out forwards`;
+                            }, index * 200);
+                        });
+                    }, 100);
+                }, 800);
+            } else {
+                errorMsg.classList.add('show');
+                input.value = '';
+                setTimeout(() => {
+                    errorMsg.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Обработка Enter в поле пароля
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Дополнительная защита от скриншотов
+        document.addEventListener('keyup', function(e) {
+            if (e.key === 'PrintScreen') {
+                navigator.clipboard.writeText('');
+            }
+        });
+
+        // Защита от изменения масштаба
+        document.addEventListener('touchmove', function(e) {
+            if (e.scale !== 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // Блокировка зума жестами
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+
+        // Отключение возможности сохранения изображений
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        // Предотвращение открытия DevTools через долгое нажатие
+        let touchStartTime;
+        document.addEventListener('touchstart', function(e) {
+            touchStartTime = Date.now();
+        });
+
+        document.addEventListener('touchend', function(e) {
+            const touchDuration = Date.now() - touchStartTime;
+            if (touchDuration > 500) { // Долгое нажатие
+                e.preventDefault();
+            }
+        });
+
+        // Обфускация содержимого при попытке инспектирования
+        let debuggerActive = false;
+        setInterval(function() {
+            const start = performance.now();
+            debugger;
+            const end = performance.now();
+            if (end - start > 100) {
+                if (!debuggerActive) {
+                    debuggerActive = true;
+                    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#fff;font-size:24px;">Доступ запрещен</div>';
+                }
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
